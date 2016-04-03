@@ -1,47 +1,32 @@
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
+[Oo]bj
+[Rr]elease
+[Dd]ebug
+packages
+*.exe
+*.dll
+*.user
+*.suo
+*.[Cc]ache
+*.bak
+*.ncb
+*.log 
+*.DS_Store
+[Tt]humbs.db 
+_ReSharper.*
+*.resharper
+Ankh.NoLoad
 
-# Folder config file
-Desktop.ini
+#OS junk files
+[Tt]humbs.db
+*.DS_Store
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+*.userprefs
+*.pidb
 
-# Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
+# NuGet Packages Directory
+packages
+*.nupkg
 
-# Windows shortcuts
-*.lnk
-
-# =========================
-# Operating System Files
-# =========================
-
-# OSX
-# =========================
-
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Thumbnails
-._*
-
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
+# Allow NuGet specific exes and dlls
+!.nuget/Microsoft.Build.dll
+Bin/Release/ExtraSettings.JSON
