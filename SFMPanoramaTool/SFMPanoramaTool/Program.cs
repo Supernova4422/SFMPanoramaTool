@@ -24,7 +24,7 @@ namespace SFMPanoramaTool
                switch (Console.ReadLine().ToLowerInvariant()) //We'll return everything lower case, just to ensure case insensitvity
                 {
                     case "/help":
-                        Console.WriteLine("{0} is able to close this window, that's pretty much it", CloseCommand);
+                        Console.WriteLine("{0} is able to close this window. {1} Is able to batch rename an exported set of sequential images, into proportionatally smaller sequential images", CloseCommand,RenameCommand);
                         break;
                     case RenameCommand:
                         BatchRename BatchRenameClass = new BatchRename();

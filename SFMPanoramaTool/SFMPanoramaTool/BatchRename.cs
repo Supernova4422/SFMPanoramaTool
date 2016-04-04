@@ -55,7 +55,9 @@ namespace SFMPanoramaTool
                                 break;
                             }
 
-                            Console.WriteLine("Camera Angles present: {0} Press Enter when ready to process", CameraAnglesInt);
+
+                            Console.WriteLine("The file path is: {0}, the file name is {1} and the extension is: {2}. The files are {3} - {4}. There are {5} files total, and that number has {6} digits", FilePath, FileName, extension, FirstFile, SecondFile, increments, digits);
+                            Console.WriteLine("Camera Angles present: {0}. If anything seems wrong, close this window, if not, press Enter when ready to process", CameraAnglesInt);
 
                             Console.ReadKey();
 
@@ -71,14 +73,22 @@ namespace SFMPanoramaTool
                                     PicturesPerFile = InitialPicturesPerFile;
                                 }
                                 Console.WriteLine("Move {0} to: {1}", FilePath + "/" + FileName + timeslooped.ToString().PadLeft(digits, '0'), FilePath + "/" + foldertouse + "/" + FileName + "_" + (InitialPicturesPerFile - PicturesPerFile));
+
+                                System.IO.Directory.CreateDirectory(FilePath + "/" + foldertouse );
+                                if (System.IO.File.Exists(FilePath + "/" + foldertouse + "/" + FileName + "_" + (InitialPicturesPerFile - PicturesPerFile) + extension))
+                                {
+                                    Console.WriteLine("Files already exist within subfolders! Remove these files then try again");
+                                    break;
+                                }
+                                System.IO.File.Copy(FilePath + "/" + FileName + timeslooped.ToString().PadLeft(digits, '0') + extension , FilePath + "/" + foldertouse + "/" + FileName + "_" + (InitialPicturesPerFile - PicturesPerFile) + extension);
+
                                 Console.WriteLine();
                                 increments--;
                                 PicturesPerFile--;
                                 timeslooped++;
-                                
-                            }
+                            } 
+                            Console.WriteLine("Task completed");
 
-                            Console.WriteLine("The filename is {0} within the filepath {1} and the amount of files is: {2}. We also can say that {2} is a {3} digit number", FileName, FilePath, increments, Math.Floor(Math.Log10(increments) + 1));
                             break;
                         }
 
