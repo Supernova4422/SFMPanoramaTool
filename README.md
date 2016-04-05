@@ -19,5 +19,6 @@ This tool may even allow users to begin rendering (with blender) immedietly afte
 
 ##Completed tools: 
 
-Batch Rename Tool. (used with /rename)
+###Batch Rename Tool
+Use /rename and follow the on-screen prompts
 
