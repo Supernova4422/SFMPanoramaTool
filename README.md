@@ -17,7 +17,7 @@ This tool is more than likely not going to be made (as its stupidly easy to do t
 This tool may even allow users to begin rendering (with blender) immedietly after rendering, but no promises on that one. 
 
 
-Completed tools: 
+##Completed tools: 
 
 Batch Rename Tool. (used with /rename)
 
