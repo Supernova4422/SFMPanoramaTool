@@ -7,6 +7,21 @@ This is the source filmmaker panorama toolkit! This program will help out users 
 ###Batch Rename Tools.
 Instead of exporting each image sequence one at a time from SFM, export them sequentially into one big chunk. Then you can use the batch rename tool to organise each seperate angle into its own folder!
 
+e.g: 
+Input:
+Video_01
+Video_02
+video_03
+video_04
+
+Output:
+angle1/video_01
+angle1/video_02
+angle2/video_01
+angle2/video_02
+
+video
+
 ###SFM Panorama Setter
 This tool can import a .DMX file of a single shot and camera, then it can turn this into several shots each with different angles, AND the right FOV settings, ready for export. 
 
