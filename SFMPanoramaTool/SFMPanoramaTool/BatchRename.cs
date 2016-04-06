@@ -17,6 +17,7 @@ namespace SFMPanoramaTool
             
             //First we Get the framerate
             int Framerate = 0;
+
             while (Framerate == 0)
             {
                 Console.WriteLine("What is the video's frame rate?");
@@ -24,8 +25,7 @@ namespace SFMPanoramaTool
                 Int32.TryParse(framerate, out Framerate);
                 Console.WriteLine("The value is: {0}", Framerate.ToString());
             }
-
-           
+            
             //We get the number of camera angles used, if the value entered is invalid, we don't stop asking until we get a valid value
             int CameraAnglesInt = 0;
 
@@ -92,7 +92,7 @@ namespace SFMPanoramaTool
                                 {
                                     if(ConvertToVideo)
                                     {
-                                        MakeAVIFile(foldertouse.ToString(), FramesForvideo, Framerate);
+                                        MakeAVIFile(foldertouse.ToString(), FramesForvideo, Framerate, FilePath);
                                     }
                                     else
                                     {
@@ -129,7 +129,7 @@ namespace SFMPanoramaTool
 
         }
 
-        public void MakeAVIFile(string filename , Image[] FramesForVideo, int Framerate)
+        public void MakeAVIFile(string filename , Image[] FramesForVideo, int Framerate ,string filepath)
         {
             
             VideoFileWriter writer = new VideoFileWriter();
@@ -138,7 +138,7 @@ namespace SFMPanoramaTool
             int height = FramesForVideo[0].Height;
 
             
-            writer.Open(filename + ".avi", width, height, Framerate, VideoCodec.Raw);
+            writer.Open(filepath + "/" + filename + ".avi", width, height, Framerate, VideoCodec.Raw);
             foreach (Bitmap Frame in FramesForVideo)
             {
                 if (Frame != null)
