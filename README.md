@@ -1,10 +1,10 @@
-# SFM Panorama Toolkit
+# Unofficial SFM Panorama Toolkit
 
 This is the source filmmaker panorama toolkit! This program will help out users of SFM to make their very own panoramic videos!
 
 Dependencies: 
 
-http://accord-framework.net/
+http://accord-framework.net/ -There's some legal stuff here that's transferred over due to GNU public lisence, will add properly. 
 
 ##Program Features: 
 
