@@ -1,0 +1,3 @@
+[submodule "Datamodel.NET"]
+	path = Datamodel.NET
+	url = git://github.com/Artfunkel/Datamodel.NET.git
