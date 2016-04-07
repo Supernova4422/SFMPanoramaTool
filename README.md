@@ -1,6 +1,6 @@
 # Unofficial SFM Panorama Toolkit
 
-This is the source filmmaker panorama toolkit! This program will help out users of SFM to make their very own panoramic videos!
+This is the unofficial source filmmaker panorama toolkit! This program will help out users of SFM to make their very own panoramic videos!
 
 Dependencies: 
 
