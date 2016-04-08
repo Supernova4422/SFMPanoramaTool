@@ -27,6 +27,10 @@ namespace SFMPanoramaTool
                     case "/help":
                         Console.WriteLine("{0} is able to close this window. {1} Is able to batch rename an exported set of sequential images, into proportionatally smaller sequential images, {2} is similar, but saves as uncompressed AVI files", CloseCommand,ImageCommand,VideoCommand);
                         break;
+                    case "dataread":
+                        DMXTool DMXToolClass = new DMXTool();
+                        DMXToolClass.TestDMX();
+                        break;
                     case ImageCommand:
                         BatchRename BatchRenameClass = new BatchRename();
                         BatchRenameClass.GetFiles(false);
