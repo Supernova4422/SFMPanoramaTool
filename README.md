@@ -27,8 +27,11 @@ angle2/video_02
 
 Similar to the batch rename tools, but it will instead export the images into a single .AVI file each, useful for importing into blender
 
-###SFM Panorama Setter 
-This tool can import a .DMX file of a single shot and camera, then it can turn this into several shots each with different angles, AND the right FOV settings, ready for export. 
+###SFM Panorama Setter -Incomplete
+This tool can import a .DMX file of a single shot and camera, then it can turn this into several shots each with different angles, AND the right FOV settings, ready for export.
+
+-Strong chance this will instead support multiple shots
+-FOV injection wokring
 
 ###Blender Preset
 This tool is more than likely not going to be made (as its stupidly easy to do this part) however this tool would allow you to turn existing image sequences into a blender file ready for export!
