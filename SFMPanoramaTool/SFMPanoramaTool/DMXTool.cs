@@ -20,6 +20,7 @@ namespace SFMPanoramaTool
         {
             
         }
+        //This is a demo as of right now. It is injecting a new FOV into the camera for the first shot.
         public void TestDMX()
         {
             DM.Load(Binary_5_File);
@@ -27,8 +28,13 @@ namespace SFMPanoramaTool
             var rootdata = data.Root;
             var data2 = data.AllElements;
             var getclip1 = data.Root.Get<Element>("activeClip");
-            var getclip = data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[0];
+            System.Single FOV = 100;
 
+            rootdata.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[0].Get<Element>("camera").Remove("fieldOfView");
+            
+            rootdata.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[0].Get<Element>("camera").Add("fieldOfView", FOV);
+
+            //data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Add(getclip);
             //  var data3 = data.Root.Get<Element>("shot1");
             return;
         }
