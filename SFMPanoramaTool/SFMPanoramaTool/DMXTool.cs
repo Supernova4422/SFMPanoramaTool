@@ -25,19 +25,35 @@ namespace SFMPanoramaTool
         {
             DM.Load(Binary_5_File);
             var data = DM.Load(Binary_5_File);
-            var rootdata = data.Root;
-            var data2 = data.AllElements;
-            var getclip1 = data.Root.Get<Element>("activeClip");
+           
             System.Single FOV = 100;
 
-            rootdata.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[0].Get<Element>("camera").Remove("fieldOfView");
-            
-            rootdata.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[0].Get<Element>("camera").Add("fieldOfView", FOV);
+            data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[0].Get<Element>("camera").Remove("fieldOfView");
+
+            System.Single NewFOV = 1;
+
+            foreach (Element datatype in data.AllElements)
+            {
+                if(datatype.Name == "fieldOfView_rescale" || datatype.Name == "fieldOfView")
+                {
+                    datatype.Remove("value");
+                    datatype.Add("value", NewFOV);
+                }
+            }
+
+            data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[0].Get<Element>("camera").Add("fieldOfView", FOV);
+
+            DM file = data;
+
+            SaveAndConvert(data, data.Encoding, data.EncodingVersion);
 
             //data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Add(getclip);
             //  var data3 = data.Root.Get<Element>("shot1");
             return;
         }
-        
+        protected void SaveAndConvert(Datamodel.Datamodel dm, string encoding, int version)
+        {
+            dm.Save("D:/SFMPanorama/Datamodel.NET/Tests/newpano.dmx", encoding, version);
+        }
     }
 }
