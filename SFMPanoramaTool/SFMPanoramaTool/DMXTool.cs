@@ -44,17 +44,17 @@ namespace SFMPanoramaTool
             data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[0].Get<Element>("camera").Add("fieldOfView", FOV);
 
             DM file = data;
+            
+            data = AddShots(data);
 
             SaveAndConvert(data, data.Encoding, data.EncodingVersion);
-
-            AddShots(data);
             //data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Add(getclip);
             //  var data3 = data.Root.Get<Element>("shot1");
             return;
         }
         protected void SaveAndConvert(Datamodel.Datamodel dm, string encoding, int version)
         {
-            dm.Save("D:/newpano.dmx", encoding, version);
+            dm.Save("D:/Steam/steamapps/common/SourceFilmmaker/game/bin/newpano.dmx", encoding, version);
         }
         public DM AddShots (DM data)
         {
@@ -72,6 +72,19 @@ namespace SFMPanoramaTool
 
 
             int AmountOfShots = data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Count;
+            System.TimeSpan CurrentTime = data.Root.Get<Element>("activeClip").Get<Element>("timeFrame").Get<System.TimeSpan>("duration");
+
+            System.TimeSpan EditedTime = CurrentTime + CurrentTime + CurrentTime + CurrentTime + CurrentTime + CurrentTime + CurrentTime + CurrentTime + CurrentTime + CurrentTime + CurrentTime;
+
+            data.Root.Get<Element>("activeClip").Get<Element>("timeFrame").Remove("duration");
+
+            data.Root.Get<Element>("activeClip").Get<Element>("timeFrame").Add("duration", EditedTime);
+
+            Element TimeIncrement = new Element();
+
+
+            System.TimeSpan StartTime = new System.TimeSpan();
+
 
             //We loop 6 times, because we're making 6 angles
             for (int i = 0; i < 6; i++)
@@ -88,27 +101,65 @@ namespace SFMPanoramaTool
 
                     var newshot = new Element(); //This generates both a new element AND a new ID
 
+                    newshot.ClassName = "DmeFilmClip";
+                    newshot.Name = "Shot" + i ;
 
-                    data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Add(newshot);
-                    int size = data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").
+                    Shot.Remove("ID");
                     
-                        
+                    Shot.Get<ElementArray>("trackGroups");
+                    
+                    /* foreach (KeyValuePair<string, object> Value in Shot)
+                    {
+                       Console.WriteLine(Value.Value.GetType().ToString());
+                       data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Add(Value.Key, Value.Value);  
+                    } */
+                    
                     //We do it like this to insert every value BUT the ID    
+
                     foreach (KeyValuePair<string,object> Value in Shot)
                     {
-                        if (Value.Key != "ID")
-                        {
-                            
-                            data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[0] = Value.Value;
+                      if (Value.Value != null)
+                         { 
+                           Console.WriteLine(Value.Value.GetType().ToString());
+                            /*if (Value.Key == "timeFrame")
+                            {
+                                //Add incerement for timeframe shit
+                                Element Newtime = new Element();
+                                Newtime.Add("start", StartTime);
+
+                                data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Add(Value.Key, Value.Value);
+                                data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<Element>("timeFrame").Remove("start");
+                                data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<Element>("timeFrame").Add("start",StartTime);
+                                StartTime = StartTime.Add(data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<Element>("timeFrame").Get<System.TimeSpan>("duration"));
+                                
+                                Console.WriteLine("Current time {0} Planning to add: {1} " , StartTime.ToString(), data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<Element>("timeFrame").Get<System.TimeSpan>("duration"));
+                            } */
+
+                           if (Value.Value.GetType().ToString() != "Datamodel.ElementArray")
+                             {
+                               data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Add(Value.Key, Value.Value);
+                             }
+                           else
+                            {
+                                ElementArray NewElementArray = (ElementArray)Value.Value;
+
+                                ElementArray NewElementArray2 = new ElementArray();
+
+                                
+
+                                foreach (Element SubElement in NewElementArray)
+                                {
+                                    NewElementArray2.Add(SubElement);
+                                    
+                                    Console.WriteLine("Here is the value: {0} and {1} and also {2}" , SubElement.ToString(), SubElement.Owner.ToString() , SubElement.ID);
+                                }
+                                data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Add(Value.Key, NewElementArray2);
+
+                            }
                         }
                     }
                    
-
-                    
-
-
-                 //   Shot.ID = new System.Guid();
-                    data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Add(Shot);
+                    //data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Add(Shot);
                     data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Add(newshot);
 
                     Console.Write("Done1");
