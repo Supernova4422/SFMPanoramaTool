@@ -31,6 +31,10 @@ namespace SFMPanoramaTool
                         DMXTool DMXToolClass = new DMXTool();
                         DMXToolClass.TestDMX();
                         break;
+                    case "timeread":
+                        DMXTool DMXToolClassTimeRead = new DMXTool();
+                        DMXToolClassTimeRead.TimeRead();
+                        break;
                     case ImageCommand:
                         BatchRename BatchRenameClass = new BatchRename();
                         BatchRenameClass.GetFiles(false);
