@@ -158,8 +158,22 @@ namespace SFMPanoramaTool
 
             int AmountOfShots = data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Count;
 
-            //We loop 6 times, because we're making 6 angles
-            for (int i = 0; i < 6; i++)
+            TimeSpan BeginningTracksLength = new TimeSpan();
+            TimeSpan BeggingTracksLowestStart = new TimeSpan();
+            foreach (Element GetShotTime in data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children"))
+            {
+                BeginningTracksLength = BeginningTracksLength.Add(GetShotTime.Get<Element>("timeFrame").Get<System.TimeSpan>("duration"));
+      
+
+                if (GetShotTime.Get<Element>("timeFrame").Get<System.TimeSpan>("start") < BeggingTracksLowestStart)
+                {
+                    BeggingTracksLowestStart = GetShotTime.Get<Element>("timeFrame").Get<System.TimeSpan>("start");
+                }
+            }
+
+
+                //We loop 6 times, because we're making 6 angles
+                for (int i = 0; i < 6; i++)
             {
                 int iterations = 0; //We do this to ensure that it doesn't infinitly loop by beginning processes on newly added shots
                 foreach (Element Shot in data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children"))
@@ -183,7 +197,7 @@ namespace SFMPanoramaTool
                             LowestStart = GetShotTime.Get<Element>("timeFrame").Get<System.TimeSpan>("start");
                         }
                     }
-                    System.TimeSpan ClipStartTime = LowestStart.Add(TotalDuration);
+                    System.TimeSpan ClipStartTime = LowestStart.Add(TotalDuration).Subtract(BeginningTracksLength);
 
 
                     Console.WriteLine(DurationForCheck);
