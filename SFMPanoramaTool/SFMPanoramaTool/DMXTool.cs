@@ -149,15 +149,15 @@ namespace SFMPanoramaTool
             Quaternion[] Cameras =
             {
                 Quaternion.CreateFromYawPitchRoll(0, 0, 0),
-                Quaternion.CreateFromYawPitchRoll(0, 0, 90),
-                Quaternion.CreateFromYawPitchRoll(0, 0, 180),
-                Quaternion.CreateFromYawPitchRoll(0, 0, -90),
-                Quaternion.CreateFromYawPitchRoll(0, 90, 0),
-                Quaternion.CreateFromYawPitchRoll(0, -90, 0)
+                Quaternion.CreateFromYawPitchRoll(0, 0, 1.5708F),
+                Quaternion.CreateFromYawPitchRoll(0, 0, 3.14159F),
+                Quaternion.CreateFromYawPitchRoll(0, 0, 4.71239F ),
+                Quaternion.CreateFromYawPitchRoll(1.5708F,0 , 0),
+                Quaternion.CreateFromYawPitchRoll(4.71239F, 0 , 0)
             };
 
             int AmountOfShots = data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Count;
-
+            int AmountOfShotsIncremental = AmountOfShots;
             TimeSpan BeginningTracksLength = new TimeSpan();
             TimeSpan BeggingTracksLowestStart = new TimeSpan();
             foreach (Element GetShotTime in data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children"))
@@ -178,7 +178,7 @@ namespace SFMPanoramaTool
                 int iterations = 0; //We do this to ensure that it doesn't infinitly loop by beginning processes on newly added shots
                 foreach (Element Shot in data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children"))
                 {
-                    if (iterations == AmountOfShots)
+                    if (iterations == AmountOfShotsIncremental)
                     {
                         break;
                     }
@@ -203,9 +203,7 @@ namespace SFMPanoramaTool
                     Console.WriteLine(DurationForCheck);
                     
                     
-                    Shot.Get<Element>("camera").Get<Element>("transform").Remove("orientation"); //First we remove the current orientation
-                    Shot.Get<Element>("camera").Get<Element>("transform").Add("orientation", Cameras[i]); //Then we add the orientation for the increment we're at and store in the new camera
-                    
+                   
 
 
                     var newshot = new Element(); //This generates both a new element AND a new ID
@@ -232,15 +230,82 @@ namespace SFMPanoramaTool
                     {
                         if (Value.Value != null)
                         {
+                            if (Value.Key == "camera")
+                            {
+                                
+
+                                //TODO Make this a void
+
+                                Element CameraToDeriveFrom = (Element)Value.Value;
+                                var CameraToInject = new Element();
+
+                                CameraToInject.Name = "Camera_" + i;
+
+                                CameraToInject.ClassName = CameraToDeriveFrom.ClassName;
+
+                                Shot.Add(Value.Key, CameraToInject);
+                                
+                                foreach (KeyValuePair<string,object> CameraValue in CameraToDeriveFrom)
+                                {
+
+                                    // Console.WriteLine(CameraValue.Value.GetType());
+
+                                    if (CameraValue.Value is ElementArray)
+                                    {
+                                        ElementArray NewElementArray = (ElementArray)CameraValue.Value;
+
+                                        ElementArray NewElementArray2 = new ElementArray();
+
+
+
+                                        foreach (Element SubElement in NewElementArray)
+                                        {
+                                            NewElementArray2.Add(SubElement);
+
+                                            // Console.WriteLine("Here is the value: {0} and {1} and also {2}" , SubElement.ToString(), SubElement.Owner.ToString() , SubElement.ID);
+                                        }
+
+                                        CameraToInject.Add(CameraValue.Key, NewElementArray2);
+
+                                    }
+
+                                    else if (CameraValue.Key == "transform")
+                                    {
+                                        Element ElementToRead = (Element)CameraValue.Value;
+                                        var ElementToInject = new Element();
+                                        foreach (KeyValuePair<string,object> SubElement in ElementToRead)
+                                        {
+                                            ElementToInject.Add(SubElement.Key, SubElement.Value);
+                                        }
+                                        ElementToInject.ClassName = ElementToRead.ClassName;
+                                        CameraToInject.Add(CameraValue.Key, ElementToInject);
+                                        
+
+                                    }
+                                    else
+                                    {
+                                        CameraToInject.Add(CameraValue.Key, CameraValue.Value);
+                                    }
+
+                                    
+                                }
+                                CameraToInject.Get<Element>("transform").Remove("orientation"); //First we remove the current orientation
+                                CameraToInject.Get<Element>("transform").Add("orientation", Cameras[i]); //Then we add the orientation for the increment we're at and store in the new camera. We can chuck it at the end 
+
+                                data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Add(Value.Key, CameraToInject);
+                                Console.WriteLine("Injected");
+
+
+                            }
                             //  Console.WriteLine(Value.Value.GetType().ToString());
-                            if (Value.Key == "timeFrame")
+                            else if (Value.Key == "timeFrame")
                             {
 
                                 //Add incerement for timeframe shit
                                 Element AllTimeValues = (Element)Value.Value;
                                 Element TimeValueToInject = new Element();
                                 TimeValueToInject.ClassName = "DmeTimeFrame";
-
+                                
                                 foreach (KeyValuePair<string, object> timevalue in AllTimeValues)
                                 {
                                     if (timevalue.Key == "scale")
@@ -300,6 +365,12 @@ namespace SFMPanoramaTool
                     iterations++;
                 }
             }
+            do
+            {
+                Console.WriteLine(AmountOfShots);
+                data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").RemoveAt(AmountOfShots - 1);
+                AmountOfShots--;
+            } while (AmountOfShots != 0);
 
             //Console.WriteLine("break here");
             return data;
