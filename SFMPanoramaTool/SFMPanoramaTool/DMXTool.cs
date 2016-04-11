@@ -16,22 +16,25 @@ namespace SFMPanoramaTool
     class DMXTool
     {
         
-        protected FileStream Binary_5_File = System.IO.File.OpenRead("D:/SFMTOOLSTEST/severalshots.dmx");
+        
+       // protected FileStream Binary_5_File = System.IO.File.OpenRead(filedirectory);
 
         public void UpgradeDMX ()
         {
             
         }
         //This is a demo as of right now. It is injecting a new FOV into the camera for the first shot.
-        public void TestDMX()
+        public void TestDMX(string retrivedirectory)
         {
             //DM.Load(Binary_5_File,Datamodel.Codecs.DeferredMode = Datamodel.Codecs.);
-            
+            FileStream Binary_5_File = System.IO.File.OpenRead(retrivedirectory);
+
             var data = DM.Load(Binary_5_File);
            
-            System.Single FOV = 100;
 
-            data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[0].Get<Element>("camera").Remove("fieldOfView");
+            float FOV = 106.25F;
+
+            //data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[0].Get<Element>("camera").Remove("fieldOfView");
 
             System.Single NewFOV = 1;
 
@@ -40,11 +43,11 @@ namespace SFMPanoramaTool
                 if(datatype.Name == "fieldOfView_rescale" || datatype.Name == "fieldOfView")
                 {
                     datatype.Remove("value");
-                    datatype.Add("value", NewFOV);
+                    datatype.Add("value", FOV);
                 }
             }
 
-            data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[0].Get<Element>("camera").Add("fieldOfView", FOV);
+         //   data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[0].Get<Element>("camera").Add("fieldOfView", FOV);
 
             DM file = data;
             
@@ -56,37 +59,7 @@ namespace SFMPanoramaTool
             return;
         }
 
-        public void TimeRead()
-        {
-            DM.Load(Binary_5_File);
-            var data = DM.Load(Binary_5_File);
-
-            System.Single FOV = 100;
-
-            data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[0].Get<Element>("camera").Remove("fieldOfView");
-
-            System.Single NewFOV = 1;
-
-            foreach (Element datatype in data.AllElements)
-            {
-                if (datatype.Name == "fieldOfView_rescale" || datatype.Name == "fieldOfView")
-                {
-                    datatype.Remove("value");
-                    datatype.Add("value", NewFOV);
-                }
-            }
-
-            data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[0].Get<Element>("camera").Add("fieldOfView", FOV);
-
-            DM file = data;
-
-            data = AlignAllToFPS(data);
-
-            SaveAndConvert(data, data.Encoding, data.EncodingVersion);
-            //data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Add(getclip);
-            //  var data3 = data.Root.Get<Element>("shot1");
-            return;
-        }
+        
         protected void SaveAndConvert(Datamodel.Datamodel dm, string encoding, int version)
         {
             dm.Save("D:/Steam/steamapps/common/SourceFilmmaker/game/bin/newpano.dmx", encoding, version);
@@ -144,7 +117,7 @@ namespace SFMPanoramaTool
            // Datamodel.Datamodel.RegisterCodec(typeof(Datamodel.Codecs.));
 
             DM Newdata = new DM();
-            
+            DM OriginalData = data;
             //Set of cameras 
             Quaternion[] Cameras =
             {
@@ -282,7 +255,12 @@ namespace SFMPanoramaTool
                                         
 
                                     }
-                                    else
+                                    else if (CameraValue.Key == "fieldOfView")
+                                    {
+                                        float FOVToInject = 106.25F;
+                                        CameraToInject.Add(CameraValue.Key, FOVToInject);
+                                    }
+                                    else 
                                     {
                                         CameraToInject.Add(CameraValue.Key, CameraValue.Value);
                                     }

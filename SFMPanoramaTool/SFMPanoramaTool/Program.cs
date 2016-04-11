@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AForge.Video.FFMPEG;
+using System.Windows.Forms;
 
 namespace SFMPanoramaTool
 {
@@ -28,12 +29,12 @@ namespace SFMPanoramaTool
                         Console.WriteLine("{0} is able to close this window. {1} Is able to batch rename an exported set of sequential images, into proportionatally smaller sequential images, {2} is similar, but saves as uncompressed AVI files", CloseCommand,ImageCommand,VideoCommand);
                         break;
                     case "dataread":
-                        DMXTool DMXToolClass = new DMXTool();
-                        DMXToolClass.TestDMX();
-                        break;
-                    case "timeread":
-                        DMXTool DMXToolClassTimeRead = new DMXTool();
-                        DMXToolClassTimeRead.TimeRead();
+                        OpenFileDialog openFileDialog1 = new OpenFileDialog();
+                        if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                        {
+                            DMXTool DMXToolClass = new DMXTool();
+                            DMXToolClass.TestDMX(openFileDialog1.FileName);
+                        }
                         break;
                     case ImageCommand:
                         BatchRename BatchRenameClass = new BatchRename();
