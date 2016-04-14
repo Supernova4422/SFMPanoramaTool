@@ -531,119 +531,210 @@ namespace SFMPanoramaTool
                     
                     iterations++;
                 }
+                
+                int CameraToClear = AmountOfShots;
                 //CAmInjectionCode
                 //OnlyChecksIftheEndIsEmpty
-                if (data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<ElementArray>("trackGroups").Count == 0)
+
+                for (int x = CameraToClear; x != 0; x--)
+                    
+                {
+                    int length = data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Count;
+                    Console.WriteLine("X = {0}, length = {1}", x, length);
+
+                    if (data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[length - x].Get<ElementArray>("trackGroups").Count == 0)
                 {
 
                 }
                 else
                 {
-                    int loopblock = data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Count;
+                        
+                    int loopblock = data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[length - x].Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Count;
                     // int loopblock = 9999;
                     int loopiterations = 0;
-
-                    foreach (Element Arraycheck in data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children"))
-                    {
-                        if (loopiterations == loopblock)
+                        int tracknum = 0;
+                        int childrennum = 0;
+                        foreach (Element TrackGroup in data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[length - x].Get<ElementArray>("trackGroups"))
                         {
-                            break;
-                        }
-
-                        Console.WriteLine("Looking for cam with name {0}", PreviousCamName);
-                        if (Arraycheck.Name == CamerasToSearch[getcam])
-                        {
-                            Console.WriteLine("FoundCam");
-                            data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Add(new Element());
-
-
-                            // Element ItemToInject = Arraycheck;
-                            Element ItemToInject = new Element();
-
-                            foreach (KeyValuePair<string, object> Datavalue in Arraycheck)
+                            foreach (Element Arraycheck in TrackGroup.Get<ElementArray>("tracks"))
                             {
-                                if (Datavalue.Value.GetType().ToString() != "Datamodel.ElementArray")
+                                foreach (Element Child in Arraycheck.Get<ElementArray>("children"))
                                 {
-                                    data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Add(Datavalue.Key, Datavalue.Value);
-                                }
-                                else
-                                {
-                                    ElementArray NewElementArray = (ElementArray)Datavalue.Value;
-
-                                    ElementArray NewElementArray2 = new ElementArray();
-
-                                    data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Add(Datavalue.Key, NewElementArray2);
-
-                                    foreach (Element SubElement in NewElementArray)
+                                    int camlength = CamerasToSearch.Count;
+                                    Console.WriteLine("Found item name {0} while looking for {1}",Child.Name, CamerasToSearch[ getcam ]);
+                                    if (Child.Name == CamerasToSearch[ getcam])
                                     {
-                                        if (SubElement.Name == "transform_pos")
-                                        {
-                                            Element NewSubelement = new Element();
-                                            NewSubelement.ClassName = SubElement.ClassName;
-                                            NewSubelement.Name = SubElement.Name;
-                                            NewElementArray2.Add(NewSubelement);
-                                            foreach (KeyValuePair<string, object> PrintValue in SubElement)
-                                            {
-                                                if (PrintValue.Key == "toElement")
-                                                {
-                                                    Console.WriteLine("Actually injecting to {0}", TransformOfLastCamera);
-                                                    NewElementArray2.Last().Add(PrintValue.Key, TransformOfLastCamera);
+                                        Console.WriteLine("FoundCamNumbers");
+                                        Element ItemToInject = new Element();
+                                        ItemToInject.ClassName = "DmeChannelsClip";
 
-                                                }
-                                                else
+                                        Arraycheck.Get<ElementArray>("children").Add(ItemToInject);
+                                        
+                                        
+                                        foreach (KeyValuePair<string, object> Datavalue in Child)
+                                        {
+                                            if (Datavalue.Value.GetType().ToString() != "Datamodel.ElementArray")
+                                            {
+                                                Arraycheck.Get<ElementArray>("children").Last().Add(Datavalue.Key, Datavalue.Value);
+                                                Console.WriteLine("Check Injection");
+                                            }
+                                            else
+                                            {
+                                                ElementArray NewElementArray = (ElementArray)Datavalue.Value;
+
+                                                ElementArray NewElementArray2 = new ElementArray();
+
+                                                Arraycheck.Get<ElementArray>("children").Last().Add(Datavalue.Key, NewElementArray2);
+
+                                                foreach (Element SubElement in NewElementArray)
                                                 {
-                                                    NewElementArray2.Last().Add(PrintValue.Key, PrintValue.Value);
+                                                    if (SubElement[1].Value.ToString() == "valuePosition")
+                                                    {
+                                                        Element NewSubelement = new Element();
+                                                        NewSubelement.ClassName = SubElement.ClassName;
+                                                        NewSubelement.Name = SubElement.Name;
+                                                        NewElementArray2.Add(NewSubelement);
+                                                        foreach (KeyValuePair<string, object> PrintValue in SubElement)
+                                                        {
+                                                            if (PrintValue.Key == "toElement")
+                                                            {
+                                                                Console.WriteLine("Actually really injecting to {0}", data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[length - x].Get<Element>("camera").Get<Element>("transform").ID);
+                                                                NewElementArray2.Last().Add(PrintValue.Key, data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[length - x].Get<Element>("camera").Get<Element>("transform"));
+                                                                Console.WriteLine("Ok, Check for injection");
+                                                            }
+                                                            else
+                                                            {
+                                                                NewElementArray2.Last().Add(PrintValue.Key, PrintValue.Value);
+                                                            }
+                                                        }
+
+                                                    }
+
+                                                    else
+                                                    {
+                                                        NewElementArray2.Add(SubElement);
+                                                    }
+                                                    // Console.WriteLine("Here is the value: {0} and {1} and also {2}" , SubElement.ToString(), SubElement.Owner.ToString() , SubElement.ID);
                                                 }
+
+                                            }
+                                        }
+                                        break;
+                                    }
+                                    if (CamerasToSearch.ContainsValue(Child.Name))
+                                    {
+                                        Console.WriteLine("Contained");
+                                    }
+                                    childrennum++;
+                                }
+                                tracknum++;
+                            }
+                
+                        }
+                        /*
+                        foreach (Element Arraycheck in data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[length - x].Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children"))
+                        {
+                            if (loopiterations == loopblock)
+                            {
+                                break;
+                            }
+
+                            Console.WriteLine("Looking for cam with name {0}", PreviousCamName);
+                                int camlength = CamerasToSearch.Count;
+                            if (Arraycheck.Name == CamerasToSearch[getcam])
+                            {
+                                Console.WriteLine("FoundCam");
+                                data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[length - x].Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Add(new Element());
+
+
+                                // Element ItemToInject = Arraycheck;
+                                Element ItemToInject = new Element();
+
+                                foreach (KeyValuePair<string, object> Datavalue in Arraycheck)
+                                {
+                                    if (Datavalue.Value.GetType().ToString() != "Datamodel.ElementArray")
+                                    {
+                                        data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[length - x].Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Add(Datavalue.Key, Datavalue.Value);
+                                    }
+                                    else
+                                    {
+                                        ElementArray NewElementArray = (ElementArray)Datavalue.Value;
+
+                                        ElementArray NewElementArray2 = new ElementArray();
+
+                                        data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[length - x].Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Add(Datavalue.Key, NewElementArray2);
+
+                                        foreach (Element SubElement in NewElementArray)
+                                        {
+                                            if (SubElement.Name == "transform_pos")
+                                            {
+                                                Element NewSubelement = new Element();
+                                                NewSubelement.ClassName = SubElement.ClassName;
+                                                NewSubelement.Name = SubElement.Name;
+                                                NewElementArray2.Add(NewSubelement);
+                                                foreach (KeyValuePair<string, object> PrintValue in SubElement)
+                                                {
+                                                    if (PrintValue.Key == "toElement")
+                                                    {
+                                                        Console.WriteLine("Actually injecting to {0}", TransformOfLastCamera);
+                                                        NewElementArray2.Last().Add(PrintValue.Key, TransformOfLastCamera);
+
+                                                    }
+                                                    else
+                                                    {
+                                                        NewElementArray2.Last().Add(PrintValue.Key, PrintValue.Value);
+                                                    }
+                                                }
+
                                             }
 
+                                            else
+                                            {
+                                                NewElementArray2.Add(SubElement);
+                                            }
+                                            // Console.WriteLine("Here is the value: {0} and {1} and also {2}" , SubElement.ToString(), SubElement.Owner.ToString() , SubElement.ID);
                                         }
 
-                                        else
-                                        {
-                                            NewElementArray2.Add(SubElement);
-                                        }
-                                        // Console.WriteLine("Here is the value: {0} and {1} and also {2}" , SubElement.ToString(), SubElement.Owner.ToString() , SubElement.ID);
                                     }
-
                                 }
+
+                                data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[length - x].Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().ClassName = Arraycheck.ClassName;
+                                data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[length - x].Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Name = "NewCam";
+
+                                //  data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Add(ItemToInject);
+
+                                Console.WriteLine("Camera Found");
+                                //data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[getcam].Get<ElementArray>("channels")[16].Get<Element>("toElement")
+                                foreach (KeyValuePair<string, object> PrintValue in data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<ElementArray>("channels")[16])
+                                {
+                                    if (PrintValue.Key == "toElement")
+                                    {
+
+                                        data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[length - x].Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[getcam].Get<ElementArray>("channels")[16].Remove(PrintValue.Key);
+                                        data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[length - x].Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[getcam].Get<ElementArray>("channels")[16].Add(PrintValue.Key, TransformOfLastCamera);
+                                        Console.WriteLine("Applying element to towards: {0}", TransformOfLastCamera.ID);
+
+                                    }
+                                    else
+                                    {
+                                        data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[length - x].Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[getcam].Get<ElementArray>("channels")[16].Remove(PrintValue.Key);
+                                        data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[length - x].Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[getcam].Get<ElementArray>("channels")[16].Add(PrintValue.Key, PrintValue.Value);
+                                    }
+                                    Console.WriteLine(PrintValue.Key);
+                                    Console.WriteLine(PrintValue.Value);
+                                }
+
                             }
-
-                            data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().ClassName = Arraycheck.ClassName;
-                            data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Name = "NewCam";
-
-                            //  data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Add(ItemToInject);
-
-                            Console.WriteLine("Camera Found");
-                            //data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[getcam].Get<ElementArray>("channels")[16].Get<Element>("toElement")
-                            foreach (KeyValuePair<string, object> PrintValue in data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<ElementArray>("channels")[16])
+                            else
                             {
-                                if (PrintValue.Key == "toElement")
-                                {
-
-                                    data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[getcam].Get<ElementArray>("channels")[16].Remove(PrintValue.Key);
-                                    data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[getcam].Get<ElementArray>("channels")[16].Add(PrintValue.Key, TransformOfLastCamera);
-                                    Console.WriteLine("Applying element to towards: {0}", TransformOfLastCamera.ID);
-
-                                }
-                                else
-                                {
-                                    data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[getcam].Get<ElementArray>("channels")[16].Remove(PrintValue.Key);
-                                    data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Get<ElementArray>("trackGroups")[0].Get<ElementArray>("tracks")[0].Get<ElementArray>("children")[getcam].Get<ElementArray>("channels")[16].Add(PrintValue.Key, PrintValue.Value);
-                                }
-                                Console.WriteLine(PrintValue.Key);
-                                Console.WriteLine(PrintValue.Value);
+                                //   ItemToInject.Add(Arraycheck);
                             }
-
-                        }
-                        else
-                        {
-                            //   ItemToInject.Add(Arraycheck);
-                        }
-
+                        } */
                         loopiterations++;
                     }
+                    getcam++;
                 }
-                getcam++;
+                
 
 
             }
@@ -663,3 +754,4 @@ namespace SFMPanoramaTool
 
     }
 }
+
