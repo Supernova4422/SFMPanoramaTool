@@ -20,6 +20,7 @@ namespace SFMPanoramaTool
             bool Exit = false;
 
             Console.WriteLine("Welcome to the SFM panorama toolkit alpha! There are likely to be some errors, so please be sure to report all of them.");
+            Console.WriteLine("This program adapts Logan McCloud's 360 degree method. Check out his stuff at: http://hyperchaotixanimation.tumblr.com/");
             Console.WriteLine("To get started, type: /Help");
 
             do {
