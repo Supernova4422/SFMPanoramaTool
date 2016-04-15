@@ -1,5 +1,8 @@
 # Unofficial SFM Panorama Toolkit
 
+This program uses Logan McCloud's 360 degree method. Check out his stuff at: http://hyperchaotixanimation.tumblr.com/
+ 
+
 This is the unofficial source filmmaker panorama toolkit! This program will help out users of SFM to make their very own panoramic videos!
 
 Dependencies: 
