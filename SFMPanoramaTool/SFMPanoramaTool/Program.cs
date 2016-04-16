@@ -21,6 +21,8 @@ namespace SFMPanoramaTool
 
             Console.WriteLine("Welcome to the SFM panorama toolkit alpha! There are likely to be some errors, so please be sure to report all of them.");
             Console.WriteLine("This program adapts Logan McCloud's 360 degree method. Check out his stuff at: http://hyperchaotixanimation.tumblr.com/");
+            Console.WriteLine("Theres some liscence stuff here I gotta check, if you're seeing this alert the creator: https://www.ffmpeg.org/legal.html");
+            Console.WriteLine("Check here: http://accord-framework.net/license.html");
             Console.WriteLine("To get started, type: /Help");
 
             do {
