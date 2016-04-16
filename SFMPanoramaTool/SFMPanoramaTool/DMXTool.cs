@@ -120,6 +120,7 @@ namespace SFMPanoramaTool
             DM Newdata = new DM();
             DM OriginalData = data;
             //Set of cameras 
+           
             Quaternion[] Cameras =
             {
                 Quaternion.CreateFromYawPitchRoll(0, 0, 0),
@@ -127,8 +128,19 @@ namespace SFMPanoramaTool
                 Quaternion.CreateFromYawPitchRoll(0, 0, 3.14159F),
                 Quaternion.CreateFromYawPitchRoll(0, 0, 4.71239F ),
                 Quaternion.CreateFromYawPitchRoll(1.5708F,0 , 0),
-                Quaternion.CreateFromYawPitchRoll(4.71239F, 0 , 0)
+                Quaternion.CreateFromYawPitchRoll(9.42478F, 0 , 0)
             };
+
+
+            Matrix4x4[] MatrixCams =
+            {
+                Matrix4x4.CreateFromYawPitchRoll(0, 0, 0),
+                Matrix4x4.CreateFromYawPitchRoll(0, 0, 1.5708F),
+                Matrix4x4.CreateFromYawPitchRoll(0, 0, 3.14159F),
+                Matrix4x4.CreateFromYawPitchRoll(0, 0, 4.71239F ),
+                Matrix4x4.CreateFromYawPitchRoll(1.5708F,0 , 0),
+                Matrix4x4.CreateFromYawPitchRoll(4.71239F, 0 , 0)
+            }; 
 
             int AmountOfShots = data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Count;
             int AmountOfShotsIncremental = AmountOfShots;
@@ -289,7 +301,6 @@ namespace SFMPanoramaTool
                                             ElementToInject.Add(SubElement.Key, SubElement.Value);
                                         }
                                         TransformOfLastCamera = ElementToInject;
-                                        
                                         ElementToInject.ClassName = ElementToRead.ClassName;
                                         CameraToInject.Add(CameraValue.Key, ElementToInject);
                                         Console.WriteLine("New Cam transform is: {0}", TransformOfLastCamera.ID);
@@ -308,9 +319,21 @@ namespace SFMPanoramaTool
 
                                     
                                 }
+                                //                     getcam needs to be used
+                                //  data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children")
+                                //                   Quaternion AngleToInject = CameraToInject.Get<Element>("transform").Get<Quaternion>("orientation");
+                                Quaternion PreviousOrientation = CameraToDeriveFrom.Get<Element>("transform").Get<Quaternion>("orientation");
+
+                                Quaternion OrientationTOInject = PreviousOrientation * Cameras[i];
+                                //TODO LAST CAM IS DUMB
+
+
+                             //   Quaternion Test = Quaternion.CreateFromRotationMatrix()
+
+                                //Quaternion NewValue = AngleToInject + Cameras[i];
                                 CameraToInject.Get<Element>("transform").Remove("orientation"); //First we remove the current orientation
-                                CameraToInject.Get<Element>("transform").Add("orientation", Cameras[i]); //Then we add the orientation for the increment we're at and store in the new camera. We can chuck it at the end 
-                                
+                                CameraToInject.Get<Element>("transform").Add("orientation", OrientationTOInject); //Then we add the orientation for the increment we're at and store in the new camera. We can chuck it at the end 
+                             //   CameraToInject.Get<Element>("transform").Add("orientation", Quaternion.Add(AngleToInject, Cameras[i]));
 
                                 data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Last().Add(Value.Key, CameraToInject);
                                 Console.WriteLine("Injected New Camera with ID of: {0}" , CameraToInject.ID);
