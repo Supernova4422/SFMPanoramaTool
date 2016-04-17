@@ -1,6 +1,8 @@
 # Unofficial SFM Panorama Toolkit
 
 This program adapts Logan McCloud's 360 degree method. Check out his stuff at: http://hyperchaotixanimation.tumblr.com/
+
+This program uses  Artfunkel's Datamodel c# library available at: https://github.com/Artfunkel/Datamodel.NET
  
 
 This is the unofficial source filmmaker panorama toolkit! This program will help out users of SFM to make their very own panoramic videos!
