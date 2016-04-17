@@ -6,6 +6,9 @@ Dependencies:
 
 http://accord-framework.net/ -There's some legal stuff here that's transferred over due to GNU public lisence, will add properly. 
 
+This project uses Artfunkel's Datamodel library available at: https://github.com/Artfunkel/Datamodel.NET
+
+
 ##Program Features: 
 
 ###Batch Rename Tools. -Completed
