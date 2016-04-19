@@ -1,0 +1,47 @@
+## The following is not in effect and is null and void until this notice has been removed
+
+
+#Distribution of this program
+This lisence file MUST accompany all copies or substantial portions of the software
+
+Definition: 
+"The Software" Refers to SFMPANORAMATOOl 
+
+#Rights and Ownership of inputs/outputs
+The rights or owenership of any input into this Software are not changed whatsoever.
+
+Inputs are defined as any file this Software modifies or makes use of, this includes but isn't limited to: 
+* Image sequences
+* .DMX files
+
+Outputs are defined as files that are the result of processing done to the inputs, includes but isn't limited to: 
+* .AVI files generated from image sequences
+* Modified .DMX files
+
+#Rights and ownership of the Software 
+You can NOT sell this program whatsoever. You CAN sell what it produces assuming that you have the already existing rights to do so
+Example:
+*if you put in something not royalty free, it doesn't become royalty free
+*But if you put in something royalty free, it remains royalty free
+
+#Changing/Modifying source code 
+You CAN change/modify the source code, you CAN'T claim complete ownership of it OR profit directly from the modfied program 
+
+You may still profit from the modified program's output, but you can't sell the program itself
+Examples: 
+*You may NOT make it produce 12 camera angles, and sell the program 
+*You MAY make it produce 12 camera angles, and sell videos produced by the program
+
+#Libraries
+This software uses a number of nuget libraries each with their own licenses and compliances. 
+
+This software uses libraries from the FFmpeg project under the LGPLv2.1
+This software does not own the FFmpeg libarary, and its owners can be found at: https://www.ffmpeg.org
+
+This software uses the accord-framework licensed under the LGPLv2.1
+
+The FFMPEG library and Accord-Framework libraries were downloaded as packages using nuget and are available at: https://www.nuget.org/packages/Accord.Video.FFMPEG/ 
+
+This project also uses the Datamodel.Net Library copyrighted by Tom Edwards contact@steamreview.org available for download at: https://github.com/Artfunkel/Datamodel.NET 
+ 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
