@@ -17,11 +17,13 @@ namespace SFMPanoramaTool
             const string CloseCommand = "close";
             const string ImageCommand = "batchimage";
             const string VideoCommand = "batchvideo";
+            const string DMXConvert = "dmx";
             Dictionary<string, string> HelpCommand = new Dictionary<string, string>();
-            HelpCommand.Add(CloseCommand, "Close command help");
-            HelpCommand.Add(ImageCommand, "Imagecommand Help");
-            HelpCommand.Add(VideoCommand, "VideoCommand Help");
-            
+            HelpCommand.Add(CloseCommand, "Closes the software");
+            HelpCommand.Add(ImageCommand, "Splits an entire image sequence into a chosen number of Folders (typically used to make one for each angle) Saved in the source directory and deletes the original files");
+            HelpCommand.Add(VideoCommand, "Splits an entire image sequence into a chosen number of AVI files (typically used ot make one for each angle), with a defined framerate and cropped to be 1:1 as defined by the height. Saved in the source directory");
+            HelpCommand.Add(DMXConvert, "Modifies a DMX file to have 6 different camera angles which can be later spliced as a panoramic video");
+
             bool Exit = false;
 
             Console.WriteLine("Welcome to the SFM panorama toolkit alpha! There are likely to be some errors, so please be sure to report all of them.");
@@ -51,7 +53,7 @@ namespace SFMPanoramaTool
                             Console.WriteLine("{0}: {1}", Entry.Key, Entry.Value);
                         }
                         break;
-                    case "dataread":
+                    case DMXConvert:
                         OpenFileDialog openFileDialog1 = new OpenFileDialog();
                         if (openFileDialog1.ShowDialog() == DialogResult.OK)
                         {
@@ -69,9 +71,6 @@ namespace SFMPanoramaTool
                         break;
                     case CloseCommand:
                         Exit = true;
-                        break;
-                    case "/debugtest":
-                        VideoFileWriter writer = new VideoFileWriter();
                         break;
                 }
             }while(!Exit);
