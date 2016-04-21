@@ -7,6 +7,11 @@ This program uses  Artfunkel's Datamodel c# library available at: https://github
 
 This is the unofficial source filmmaker panorama toolkit! This program will help out users of SFM to make their very own panoramic videos!
 
+#installing submoduels
+To get the datamodel c# library in your github project, run the following in git shell: 
+git submodule init
+git submodule update 
+
 Dependencies: 
 
 http://accord-framework.net/ -There's some legal stuff here that's transferred over due to GNU public lisence, will add properly. 
