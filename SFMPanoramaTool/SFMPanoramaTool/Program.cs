@@ -31,7 +31,7 @@ namespace SFMPanoramaTool
             Console.WriteLine("CREDITS:");
             Console.WriteLine("");
             Console.WriteLine("This program adapts Logan McCloud's 360 degree method. Check out his stuff at: http://hyperchaotixanimation.tumblr.com/");
-
+            Console.WriteLine("");
             //Legal Notices
             Console.WriteLine("About this software");
             Console.WriteLine("");
