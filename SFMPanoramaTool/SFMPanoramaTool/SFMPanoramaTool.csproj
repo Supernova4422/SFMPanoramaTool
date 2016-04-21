@@ -122,6 +122,12 @@
     <Error Condition="!Exists('..\packages\Accord.Video.FFMPEG.3.0.2\build\Accord.Video.FFMPEG.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Accord.Video.FFMPEG.3.0.2\build\Accord.Video.FFMPEG.targets'))" />
   </Target>
   <Import Project="..\packages\Accord.Video.FFMPEG.3.0.2\build\Accord.Video.FFMPEG.targets" Condition="Exists('..\packages\Accord.Video.FFMPEG.3.0.2\build\Accord.Video.FFMPEG.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y $(TargetDir)\x86 $(TargetDir) 
+
+
+</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
