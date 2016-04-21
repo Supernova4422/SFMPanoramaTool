@@ -1,20 +1,17 @@
 # Unofficial SFM Panorama Toolkit
 
-This program adapts Logan McCloud's 360 degree method. Check out his stuff at: http://hyperchaotixanimation.tumblr.com/
-
-This program uses  Artfunkel's Datamodel c# library available at: https://github.com/Artfunkel/Datamodel.NET
- 
-
 This is the unofficial source filmmaker panorama toolkit! This program will help out users of SFM to make their very own panoramic videos!
 
-#installing submoduels
-To get the datamodel c# library in your github project, run the following in git shell: 
-git submodule init
-git submodule update 
+#Dependencies and libraries
+This program adapts Logan McCloud's 360 degree method. Check out his stuff at: http://hyperchaotixanimation.tumblr.com/
 
-Dependencies: 
+This software uses libraries from the FFmpeg project under the LGPL v2.1. 
+FFmpeg is a trademark of Fabrice Bellard, originator of the FFmpeg project.
 
-http://accord-framework.net/ -There's some legal stuff here that's transferred over due to GNU public lisence, will add properly. 
+
+This software uses the libraries from The Accord.NET Framework under the LGPL v2.1. It is a Copyright owned by César Roberto de Souza <cesarsouza at gmail.com>
+
+This project uses Artfunkel's Datamodel library available at: https://github.com/Artfunkel/Datamodel.NET
 
 ##Program Features: 
 
@@ -35,13 +32,14 @@ angle2/video_02
 
 ###Batch Avi Creation. -Completed
 
-Similar to the batch rename tools, but it will instead export the images into a single .AVI file each, useful for importing into blender
+Similar to the batch rename tools, but it will instead export the images into a single 1:1 .AVI file each, useful for importing into blender
 
-###SFM Panorama Setter 
-This tool can import a .DMX file of a single shot and camera, then it can turn this into several shots each with different angles, AND the right FOV settings, ready for export. 
+###SFM Panorama Setter -COMPLETED
+This tool can import a .DMX file of a single shot and camera, then it can turn this into several shots each with different angles, AND the right FOV settings, ready for export.
 
-###Blender Preset
-This tool is more than likely not going to be made (as its stupidly easy to do this part) however this tool would allow you to turn existing image sequences into a blender file ready for export!
+
+###Blender Preset - In progress
+This tool is more than likely not going to be made (as its stupidly easy to do this part) however this tool would allow you to turn existing image sequences into a blender file ready for export! As I said its stupidly easy though. 
 
 
 This tool may even allow users to begin rendering (with blender) immedietly after rendering, but no promises on that one. 
