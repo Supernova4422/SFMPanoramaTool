@@ -40,6 +40,8 @@ This tool can import a .DMX file of a single shot and camera, then it can turn t
 ###TODO: 
 User Experience Changes
 
+Usage Guide
+
 Remove dependency on Accord.Video.FFMpeg with another library
 
 Allow to be run from the command line, and thus Source Film Maker
