@@ -62,7 +62,16 @@ namespace SFMPanoramaTool
         
         protected void SaveAndConvert(Datamodel.Datamodel dm, string encoding, int version)
         {
-            dm.Save("D:/Steam/steamapps/common/SourceFilmmaker/game/bin/newpano.dmx", encoding, version);
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+            saveFileDialog1.Filter = "Dmx files (*.dmx)|*.dmx|All files (*.*)|*.*";
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                dm.Save(saveFileDialog1.FileName, encoding, version);
+            }
         }
 
         public DM AlignAllToFPS(DM data)
