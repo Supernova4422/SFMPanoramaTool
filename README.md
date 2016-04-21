@@ -2,13 +2,13 @@
 
 This is the unofficial source filmmaker panorama toolkit! This program will help out users of SFM to make their very own panoramic videos!
 
-Dependencies: 
+#Dependencies and libraries
 
 This software uses libraries from the FFmpeg project under the LGPL v2.1. 
 FFmpeg is a trademark of Fabrice Bellard, originator of the FFmpeg project.
 
 
-This software uses the libraries from The Accord.NET Framework under the LGPL v2.1. It is a Copyright (c) 2009-2014 owned by César Roberto de Souza <cesarsouza at gmail.com>
+This software uses the libraries from The Accord.NET Framework under the LGPL v2.1. It is a Copyright owned by César Roberto de Souza <cesarsouza at gmail.com>
 
 This project uses Artfunkel's Datamodel library available at: https://github.com/Artfunkel/Datamodel.NET
 
