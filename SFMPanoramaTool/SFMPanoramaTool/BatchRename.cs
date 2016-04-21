@@ -70,7 +70,7 @@ namespace SFMPanoramaTool
                             
                             string FileName = SecondFile.Substring(0, i); //We get the filename by splitting the string before the different character
 
-                            int ImagesInSequence = Int32.Parse(SecondFile.Substring(i)); //We get the amount of images, by splitting on and after the different character
+                            int ImagesInSequence = Int32.Parse(SecondFile.Substring(i) ) + 1; //We get the amount of images, by splitting on and after the different character
                             
                             int digits = Convert.ToInt32(Math.Floor(Math.Log10(ImagesInSequence) + 1)); //We get the amount of digits in the value of the images in sequence, so we can apply padding later
 
@@ -83,7 +83,7 @@ namespace SFMPanoramaTool
                             int InitialPicturesPerFile = (ImagesInSequence / CameraAnglesInt); //The amount of frames per video/folder
                             int PicturesRemainingPerFile = InitialPicturesPerFile; //The amount of frames per video/folder, this will be incremented
                             int foldertouse = 0;
-                            Image[] FramesForvideo = new Bitmap[InitialPicturesPerFile]; //Create a new array we will store images to make into video
+                            string[] FramesForvideo = new string[InitialPicturesPerFile]; //Create a new array we will store images to make into video
                             string[] FileLocations = new string[InitialPicturesPerFile];
 
                             while (ImagesInSequence + 1 != 0)
@@ -101,12 +101,12 @@ namespace SFMPanoramaTool
 
                                     foldertouse++; //Once a folder/video is filled out, it'll create a new folder/video to store the next set of images in
                                     PicturesRemainingPerFile = InitialPicturesPerFile; //Resets the value to what it was initially set as
-                                    FramesForvideo = new Bitmap[InitialPicturesPerFile + 1]; //Wipes the array
+                                    FramesForvideo = new string[InitialPicturesPerFile + 1]; //Wipes the array
                                 }
                                 
                                 FileLocations[InitialPicturesPerFile - PicturesRemainingPerFile] = ( FileName + CurrentPicture.ToString().PadLeft(digits, '0') + extension);
 
-                                FramesForvideo[InitialPicturesPerFile - PicturesRemainingPerFile] = Bitmap.FromFile(FilePath + "/" + FileName + CurrentPicture.ToString().PadLeft(digits, '0') + extension); //Add image to the array
+                                FramesForvideo[InitialPicturesPerFile - PicturesRemainingPerFile] = FilePath + "/" + FileName + CurrentPicture.ToString().PadLeft(digits, '0') + extension; //Add image to the array
 
                                 ImagesInSequence--; //We lower it so we can get the TOTAL amount of images remaining
                                 PicturesRemainingPerFile--; //We lower it so we later check if we've ran out of images for the file we're writing
@@ -129,28 +129,36 @@ namespace SFMPanoramaTool
 
         }
 
-        public void MakeAVIFile(string filename , Image[] FramesForVideo, int Framerate ,string filepath)
+        public void MakeAVIFile(string filename , string[] FramesForVideo, int Framerate ,string filepath)
         {
             
             VideoFileWriter writer = new VideoFileWriter();
+            Image ImageToStudy = Image.FromFile(FramesForVideo[0]);
+            int width = ImageToStudy.Width; 
+            int height = ImageToStudy.Height;
+            Rectangle Rectangle = new Rectangle(((width - height) / 2), 0, height, height);
             
-            int width = FramesForVideo[0].Width;
-            int height = FramesForVideo[0].Height;
-
-            
-            writer.Open(filepath + "/" + filename + ".avi", width, height, Framerate, VideoCodec.Raw);
-            foreach (Bitmap Frame in FramesForVideo)
+            writer.Open(filepath + "/" + filename + ".avi", height, height, Framerate, VideoCodec.Raw);
+            foreach (string FrameLocation in FramesForVideo)
             {
-                if (Frame != null)
-                { 
-                writer.WriteVideoFrame(Frame);
+                
+                
+                if (FrameLocation != null)
+                {
+                    Bitmap Frame = new Bitmap(FrameLocation);
+                    Bitmap NewFrame = Frame.Clone(Rectangle, Frame.PixelFormat);
+                    writer.WriteVideoFrame(NewFrame);
+                    Frame.Dispose();
+                    NewFrame.Dispose();
                 }
                 else
                 {
-                    Console.WriteLine("Null Exception");
+                    Console.WriteLine(FrameLocation);
+                    Console.WriteLine("One Video Done, please wait");
                 }
             }
             writer.Close();
+            writer.Dispose();
 
         }
         public void TransferFiles(string[] ImagesToUse, string FilePath, int foldertouse , string filename, string extension)
