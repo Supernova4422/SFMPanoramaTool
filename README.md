@@ -3,6 +3,7 @@
 This is the unofficial source filmmaker panorama toolkit! This program will help out users of SFM to make their very own panoramic videos!
 
 #Dependencies and libraries
+This program adapts Logan McCloud's 360 degree method. Check out his stuff at: http://hyperchaotixanimation.tumblr.com/
 
 This software uses libraries from the FFmpeg project under the LGPL v2.1. 
 FFmpeg is a trademark of Fabrice Bellard, originator of the FFmpeg project.
