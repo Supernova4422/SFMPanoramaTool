@@ -2,6 +2,10 @@
 
 This is the unofficial source filmmaker panorama toolkit! This program will help out users of SFM to make their very own panoramic videos!
 
+A usage Guide for this program can be found in documentation.rtf
+
+Please be sure to report all bugs, and provide relavent .dmx files when applicable
+
 #Dependencies and libraries
 This program adapts Logan McCloud's 360 degree method. Check out his stuff at: http://hyperchaotixanimation.tumblr.com/
 
