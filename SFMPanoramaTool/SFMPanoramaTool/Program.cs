@@ -45,6 +45,7 @@ namespace SFMPanoramaTool
             //Print Useful Stuff
             Console.WriteLine("");
             Console.WriteLine("Welcome to the SFM panorama toolkit alpha! There are likely to be some errors, so please be sure to report all of them.");
+            Console.WriteLine("Please make sure to read documentation.rtf to properly understand how to use this program");
             Console.WriteLine("To get started, type: /help");
 
             while (Exit)

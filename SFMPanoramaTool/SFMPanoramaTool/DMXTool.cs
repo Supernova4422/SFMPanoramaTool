@@ -62,6 +62,7 @@ namespace SFMPanoramaTool
         
         protected void SaveAndConvert(Datamodel.Datamodel dm, string encoding, int version)
         {
+            Console.WriteLine("Processing Completed, Select Save File Destination");
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
 
             saveFileDialog1.Filter = "Dmx files (*.dmx)|*.dmx|All files (*.*)|*.*";
@@ -71,6 +72,7 @@ namespace SFMPanoramaTool
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 dm.Save(saveFileDialog1.FileName, encoding, version);
+                Console.WriteLine("Saved Successfully");
             }
         }
 
