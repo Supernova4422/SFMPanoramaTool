@@ -52,7 +52,10 @@ namespace SFMPanoramaTool
 
         private void Process_Click(object sender, EventArgs e)
         {
-
+            BatchRename BatchRenameClassVideo = new BatchRename();
+            int framerate = Int32.Parse(textBox11.Text);
+            int cameraangles = Int32.Parse(textBox9.Text);
+            BatchRenameClassVideo.GetFiles(radioButton1.Checked,textBox2.Text,textBox3.Text, framerate, cameraangles);            
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -103,6 +106,31 @@ namespace SFMPanoramaTool
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox8_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox11_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox9_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
         {
 
         }

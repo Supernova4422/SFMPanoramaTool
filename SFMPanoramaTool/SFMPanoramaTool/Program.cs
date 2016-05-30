@@ -70,11 +70,11 @@ namespace SFMPanoramaTool
                         break;
                     case ImageCommand:
                         BatchRename BatchRenameClass = new BatchRename();
-                        BatchRenameClass.GetFiles(false);
+                        BatchRenameClass.GetFilesVariables(false);
                         break;
                     case VideoCommand:
                         BatchRename BatchRenameClassVideo = new BatchRename();
-                        BatchRenameClassVideo.GetFiles(true);
+                        BatchRenameClassVideo.GetFilesVariables(true);
                         break;
                     case CloseCommand:
                         Exit = false;
