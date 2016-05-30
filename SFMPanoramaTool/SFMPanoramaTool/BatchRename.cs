@@ -95,10 +95,6 @@ namespace SFMPanoramaTool
 
                     int digits = Convert.ToInt32(Math.Floor(Math.Log10(ImagesInSequence) + 1)); //We get the amount of digits in the value of the images in sequence, so we can apply padding later
 
-                    Console.WriteLine("Camera Angles present: {0}. If anything seems wrong, close this window, if not, press Enter when ready to process", CameraAnglesInt);
-
-                    Console.ReadKey();
-
                     int CurrentPicture = 0; //When we go through each file in the folder sequentially, this keeps track of what file we're up to.
 
                     int InitialPicturesPerFile = (ImagesInSequence / CameraAnglesInt); //The amount of frames per video/folder
