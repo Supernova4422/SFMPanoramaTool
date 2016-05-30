@@ -13,6 +13,7 @@ namespace SFMPanoramaTool
         [STAThread]
         static void Main(string[] args)
         {
+            Application.Run(new Form1());
             //These all need to be lowercase
             const string CloseCommand = "close";
             const string ImageCommand = "batchimage";
@@ -64,7 +65,7 @@ namespace SFMPanoramaTool
                         if (openFileDialog1.ShowDialog() == DialogResult.OK)
                         {
                             DMXTool DMXToolClass = new DMXTool();
-                            DMXToolClass.TestDMX(openFileDialog1.FileName);
+                            DMXToolClass.TestDMX(openFileDialog1.FileName,openFileDialog1.FileName + "_modified.dmx");
                         }
                         break;
                     case ImageCommand:

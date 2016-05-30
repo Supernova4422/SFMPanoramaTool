@@ -24,7 +24,7 @@ namespace SFMPanoramaTool
             
         }
         //This is a demo as of right now. It is injecting a new FOV into the camera for the first shot.
-        public void TestDMX(string retrivedirectory)
+        public void TestDMX(string retrivedirectory , string savedirectory)
         {
             //DM.Load(Binary_5_File,Datamodel.Codecs.DeferredMode = Datamodel.Codecs.);
             FileStream Binary_5_File = System.IO.File.OpenRead(retrivedirectory);
@@ -53,27 +53,17 @@ namespace SFMPanoramaTool
             
             data = AddShots(data);
 
-            SaveAndConvert(data, data.Encoding, data.EncodingVersion);
+            SaveAndConvert(data, data.Encoding, data.EncodingVersion, savedirectory);
             //data.Root.Get<Element>("activeClip").Get<Element>("subClipTrackGroup").Get<ElementArray>("tracks")[0].Get<ElementArray>("children").Add(getclip);
             //  var data3 = data.Root.Get<Element>("shot1");
             return;
         }
 
         
-        protected void SaveAndConvert(Datamodel.Datamodel dm, string encoding, int version)
+        protected void SaveAndConvert(Datamodel.Datamodel dm, string encoding, int version, string savedirectory)
         {
-            Console.WriteLine("Processing Completed, Select Save File Destination");
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-
-            saveFileDialog1.Filter = "Dmx files (*.dmx)|*.dmx|All files (*.*)|*.*";
-            saveFileDialog1.FilterIndex = 2;
-            saveFileDialog1.RestoreDirectory = true;
-
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                dm.Save(saveFileDialog1.FileName, encoding, version);
-                Console.WriteLine("Saved Successfully");
-            }
+            Console.WriteLine("Processing Completed, Saving now");
+            dm.Save(savedirectory, encoding, version);
         }
 
         public DM AlignAllToFPS(DM data)
