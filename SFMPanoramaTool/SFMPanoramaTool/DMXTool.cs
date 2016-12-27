@@ -125,11 +125,11 @@ namespace SFMPanoramaTool
             Quaternion[] Cameras =
             {
                 Quaternion.CreateFromYawPitchRoll(0, 0, 0),
-                Quaternion.CreateFromYawPitchRoll(0, 0, 90 * (Math.PI/ 180F)),
-                Quaternion.CreateFromYawPitchRoll(0, 0, 180 * (Math.PI/ 180F)),
-                Quaternion.CreateFromYawPitchRoll(0, 0, 270 * (Math.PI/ 90F) ),
-                Quaternion.CreateFromYawPitchRoll(90 * (Math.PI/ 90F),0 , 0),
-                Quaternion.CreateFromYawPitchRoll(270 * (Math.PI/ 90F), 0 , 0)
+                Quaternion.CreateFromYawPitchRoll(0, 0, 90F * ((float)Math.PI/ 180F)),
+                Quaternion.CreateFromYawPitchRoll(0, 0, 180F * ((float)Math.PI/ 180F)),
+                Quaternion.CreateFromYawPitchRoll(0, 0, 270F * ((float)Math.PI/ 180F) ),
+                Quaternion.CreateFromYawPitchRoll(90F * ((float)Math.PI/ 180F),180F * ((float)Math.PI/ 180F) , 0),
+                Quaternion.CreateFromYawPitchRoll((360F + 180F) * ((float)Math.PI/ 180F), 0 , 0)
             };
 
 
