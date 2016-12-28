@@ -55,8 +55,8 @@ namespace SFMPanoramaTool
             BatchRename BatchRenameClassVideo = new BatchRename();
             int ParseFramerate = 24;
             int Parsecameraangles = 6;
-            Int32.TryParse(textBox11.Text, out ParseFramerate);
-            Int32.TryParse(textBox9.Text, out Parsecameraangles);
+            Int32.TryParse(textBox9.Text, out ParseFramerate);
+            Int32.TryParse(textBox11.Text, out Parsecameraangles);
             BatchRenameClassVideo.GetFiles(radioButton2.Checked,textBox2.Text,textBox3.Text, ParseFramerate, Parsecameraangles);            
         }
 
