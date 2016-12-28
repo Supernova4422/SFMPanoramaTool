@@ -1,5 +1,7 @@
 # Unofficial SFM Panorama Toolkit
 
+Userguide: http://pastebin.com/MhQyDU3c
+
 This is the unofficial source filmmaker panorama toolkit! This program will help out users of SFM to make their very own panoramic videos!
 
 A usage Guide for this program can be found in documentation.rtf
