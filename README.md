@@ -1,6 +1,5 @@
 # Unofficial SFM Panorama Toolkit
-
-Userguide: http://pastebin.com/MhQyDU3c
+Blogpost with a guide on how to use the tool: https://fantasmos.wordpress.com/2018/02/26/how-i-survived-creating-a-4k-360-3d-60fps-video-of-a-tf2-map/ and behind the scenes of what it takes to make a 4k 3D video 
 
 This is the unofficial source filmmaker panorama toolkit! This program will help out users of SFM to make their very own panoramic videos!
 
@@ -19,9 +18,9 @@ This software uses the libraries from The Accord.NET Framework under the LGPL v2
 
 This project uses Artfunkel's Datamodel library available at: https://github.com/Artfunkel/Datamodel.NET
 
-##Program Features: 
+## Program Features: 
 
-###Batch Rename Tools.
+### Batch Rename Tools.
 Instead of exporting each image sequence one at a time from SFM, export them sequentially into one big chunk. Then you can use the batch rename tool to organise each seperate angle into its own folder! For example:
 
 Input:
@@ -36,7 +35,7 @@ angle1/video_02
 angle2/video_01
 angle2/video_02
 
-###Batch Avi Creation.
+### Batch Avi Creation.
 
 Similar to the batch rename tools, but it will instead export the images into a single 1:1 .AVI file each, useful for importing into blender
 
